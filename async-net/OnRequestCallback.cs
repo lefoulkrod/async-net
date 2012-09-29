@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace node.cs
+namespace asyncnet
 {
-    internal delegate void OnRequestCallback(HttpListenerRequest req, HttpListenerResponse res);
+    public delegate void OnRequestCallback(HttpListenerRequest req, IAsyncHttpResponse res);
 }

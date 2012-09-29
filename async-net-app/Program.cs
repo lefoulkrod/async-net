@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Text;
 
-namespace node.cs
+namespace asyncnet.app
 {
     class Program
     {
         static void Main(string[] args)
         {
-            new AsynchHttpServer().OnRequest((req, res) =>
+            new AsyncHttpServer().OnRequest((req, res) =>
                                                  {
                                                      var responseString = "hello worlds!" + req.QueryString["req"];
                                                      byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-                                                     res.ContentLength64 = buffer.Length;
-                                                     res.OutputStream.BeginWrite(buffer, 0, buffer.Length, ar => ((HttpListenerResponse)ar.AsyncState).OutputStream.Close(), res);
+                                                     res.OnWrite(responseString, response => response.End());
                                                  });
             Console.ReadLine();
         }

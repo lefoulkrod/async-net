@@ -1,14 +1,14 @@
 using System;
 using System.Net;
 
-namespace node.cs
+namespace asyncnet
 {
-    internal class AsynchHttpServer
+    public class AsyncHttpServer
     {
         private readonly HttpListener _listener;
         private OnRequestCallback _onRequestCallback;
 
-        public AsynchHttpServer()
+        public AsyncHttpServer()
         {
             _listener = new HttpListener();
             _listener.Prefixes.Add("http://+:80/");
@@ -20,7 +20,7 @@ namespace node.cs
         {
             _listener.BeginGetContext(GetContext, null);
             var context = _listener.EndGetContext(result);
-            _onRequestCallback(context.Request, context.Response);
+            _onRequestCallback(context.Request, new AsyncHttpResponse( context.Response));
             
         }
 
